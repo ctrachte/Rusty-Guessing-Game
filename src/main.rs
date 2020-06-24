@@ -7,42 +7,31 @@ fn main() {
 
     let secret_number = rand::thread_rng().gen_range(1, 101);
 
-    println!("Please input your first guess: ");
+    let mut guess = String::new();
 
-    let mut guess1 = String::new();
-    let mut guess2 = String::new();
+    loop {
+        println!("Please input your guess: ");
 
-    io::stdin()
-        .read_line(&mut guess1)
-        .expect("Failed to read your input!");
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read your input!");
 
-    println!("Please input your second guess: ");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
 
-    io::stdin()
-        .read_line(&mut guess2)
-        .expect("Failed to read your input!");
-        
-    let guess1: u32 = guess1
-        .trim()
-        .parse()
-        .expect("Please type a number!");
-    let guess2: u32 = guess2
-        .trim()
-        .parse()
-        .expect("Please type a number!");
-        
-    println!("You first guessed: {} then guessed: {}", guess1, guess2);
+        println!("You guessed: {}", guess);
+    
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("{} is too small!", guess),
+            Ordering::Greater => println!("{} is too big!", guess),
+            Ordering::Equal => {
+                println!("{} is correct! You win!", guess),
+                break;
+            }
+        }
 
-    match guess1.cmp(&secret_number) {
-        Ordering::Less => println!("{} is too small!", guess1),
-        Ordering::Greater => println!("{} is too big!", guess1),
-        Ordering::Equal => println!("{} is correct! You win!", guess1),
-    }
-
-    match guess2.cmp(&secret_number) {
-        Ordering::Less => println!("{} is too small!", guess2),
-        Ordering::Greater => println!("{} is too big!", guess2),
-        Ordering::Equal => println!("{} is correct! You win!", guess2),
     }
 
 }
