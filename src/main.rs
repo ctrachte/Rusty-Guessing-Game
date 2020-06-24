@@ -22,4 +22,6 @@ fn main() {
         .expect("Failed to read your input!");
 
     println!("You first guessed: {} then guessed: {}", guess1, guess2);
+    println!("The secret number is: {}", secret_number);
+
 }
