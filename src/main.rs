@@ -1,5 +1,6 @@
 use std::io;
 use rand::Rng;
+use std::cmp::Ordering;
 
 fn main() {
     println!("Guess a number between 1 and 100!");
@@ -20,8 +21,28 @@ fn main() {
     io::stdin()
         .read_line(&mut guess2)
         .expect("Failed to read your input!");
-
+        
+    let guess1: u32 = guess1
+        .trim()
+        .parse()
+        .expect("Please type a number!");
+    let guess2: u32 = guess2
+        .trim()
+        .parse()
+        .expect("Please type a number!");
+        
     println!("You first guessed: {} then guessed: {}", guess1, guess2);
-    println!("The secret number is: {}", secret_number);
+
+    match guess1.cmp(&secret_number) {
+        Ordering::Less => println!("{} is too small!", guess1),
+        Ordering::Greater => println!("{} is too big!", guess1),
+        Ordering::Equal => println!("{} is correct! You win!", guess1),
+    }
+
+    match guess2.cmp(&secret_number) {
+        Ordering::Less => println!("{} is too small!", guess2),
+        Ordering::Greater => println!("{} is too big!", guess2),
+        Ordering::Equal => println!("{} is correct! You win!", guess2),
+    }
 
 }
