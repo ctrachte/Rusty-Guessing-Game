@@ -1,7 +1,10 @@
 use std::io;
+use rand::Rng;
 
 fn main() {
-    println!("Guess the number!");
+    println!("Guess a number between 1 and 100!");
+
+    let secret_number = rand::thread_rng().gen_range(1, 101);
 
     println!("Please input your first guess: ");
 
@@ -18,5 +21,5 @@ fn main() {
         .read_line(&mut guess2)
         .expect("Failed to read your input!");
 
-    println!("You first guessed: {} then guessed {}", guess1, guess2);
+    println!("You first guessed: {} then guessed: {}", guess1, guess2);
 }
